@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Income</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    <link rel="stylesheet" href="income.css">
+  </head>
+
+  <body>
+
+    <div id="input" class="block">
+      <div class="grid">
+        <label>Income</label>
+        <input type="number" v-model.number="income">
+        <label>City</label>
+        <select v-model="city">
+          <option v-for="city in cities" v-bind:value="city">
+          {{ city.name }}
+          </option>
+        </select>
+      </div>
+
+      <hr>
+
+      <h2>{{ city.name }}</h2>
+
+      <div class="grid">
+        <label>Median</label>
+        <div class="value">{{ city.median | money }}</div>
+        <label>Lower class</label>
+        <div class="value">&lt; {{ city.median * 0.75 | money }} ({{ city.percs[0] / 100 | perc }})</div>
+        <label>Middle class</label>
+        <div class="value">x ({{ city.percs[1] / 100 | perc }})</div>
+        <label>Upper class</label>
+        <div class="value">&gt; {{ city.median * 2.0 | money }} ({{ city.percs[2] / 100 | perc }})</div>
+        <label>You</label>
+        <div class="value">{{ getClass() }} class ({{ getPercentage() | perc }})</div>
+      </div>
+
+    </div>
+
+    <div id="main" class="block">
+      <canvas id="chart"></canvas>
+    </div>
+
+  </body>
+
+  <script src="income.js"></script>
+
+</html>
